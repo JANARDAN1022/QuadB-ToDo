@@ -37,10 +37,8 @@ const NoteDetails = () => {
   const HandleEdit = () => {
     if (!Updating && note && id) {
       setUpdatedNote({
-        body: note.body,
-        Completed: note.Completed,
-        id: id,
-        title: note.title
+        ...note,
+        id:id
       });
       setUpdating(true);
       TitleRef.current?.focus();
@@ -49,10 +47,12 @@ const NoteDetails = () => {
     }
   }
 
+
+
   // Function to handle note update
   const handleUpdateNote = async () => {
     if (note && id) {
-      if (updatedNote.body.content !== '' && updatedNote.title !== '' && (updatedNote.body.content !== note.body.content || updatedNote.title !== note.title || updatedNote.Completed !== note.Completed)) {
+      if (updatedNote.body.content && updatedNote.body.content !== '' && updatedNote.title && updatedNote.title !== '' ){
         const response = await dispatch<any>(UpdateNote(updatedNote));
         // Unwrap the result to get the action payload
         const result = unwrapResult(response);
@@ -112,7 +112,7 @@ const NoteDetails = () => {
           {/* Displaying and editing note body */}
           <p className='flex gap-2 w-full mt-3'>Body:
             <span className={`${!Updating ? '' : 'hidden'}`}>{note.body.content}</span>
-            <textarea maxLength={300} rows={5} ref={BodyRef} className={`${!Updating ? 'hidden' : ''} w-[400px]  outline-none  rounded-md overflow-hidden resize-none max-h-[300px]  bg-transparent text-white `} placeholder={`${note.body.content}`} value={updatedNote.body.content} onChange={(e: any) => setUpdatedNote({ ...updatedNote, body: e.target.value })} />
+            <textarea maxLength={300} rows={5} ref={BodyRef} className={`${!Updating ? 'hidden' : ''} w-[400px]  outline-none  rounded-md overflow-hidden resize-none max-h-[300px]  bg-transparent text-white `} placeholder={`${updatedNote.body.content!==''?updatedNote.body.content:''}`} value={updatedNote.body.content} onChange={(e: any) => setUpdatedNote({ ...updatedNote, body:{ ...updatedNote.body, content: e.target.value }})} />
           </p>
           {/* Button to save changes */}
           <button onClick={handleUpdateNote} className={`${!Updating ? 'hidden' : ''} self-end bg-blue-400 hover:bg-blue-500 text-[rgba(255,255,255,0.8)] hover:text-white transition-all ease-in 300ms px-2 py-1 font-bold rounded-md`}>Save Changes</button>

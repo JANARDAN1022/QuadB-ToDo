@@ -67,7 +67,7 @@ const NoteApp = () => {
   };
 
   return (
-    <div className='relative flex gap-5 flex-col  bg-gradient-to-r from-gray-700 via-gray-900 to-black h-screen overflow-y-scroll items-center text-white p-10'>
+    <div className='relative flex gap-5 flex-col overflow-x-hidden  bg-gradient-to-r from-gray-700 via-gray-900 to-black h-screen overflow-y-scroll items-center text-white p-10'>
       {/* Confirmation popup for deleting notes */}
       <div className={`${ConfirmDeletePopup.open === true ? '' : 'hidden'}  absolute top-[40%] bg-gray-500 rounded-md z-50 text-black w-[300px] flex justify-center items-center p-10 shadow-md`}>
         <ConfirmPopup handleDeleteNote={handleDeleteNote} setConfirmDeletePopup={setConfirmDeletePopup} id={ConfirmDeletePopup.id} />
@@ -136,7 +136,7 @@ const NoteApp = () => {
                 setTextType('');
               }}>Normal</button>
             </div>
-            <span className='absolute w-full top-[-70px] md:top-[-25px] right-[-20px] md:right-0'>Characters left: {MaxLength - newNote.body.content.length}</span>
+            <span className='absolute w-full top-[-70px] md:top-[-25px] right-[-20px] md:right-[-68%]'>Characters left: {MaxLength - newNote.body.content.length}</span>
           </div>
           <button disabled={ConfirmDeletePopup.open} className='border  border-white p-2 rounded-md' type="button" onClick={handleAddNote}>
             Add Note
@@ -165,7 +165,7 @@ const NoteApp = () => {
                 {/* Displaying note title */}
                 <h1 className={`text-center ${note.Completed ? 'line-through' : 'underline'} w-full self-center`}>{note.title}</h1>
                 {/* Displaying note body */}
-                <p className={`${note.body.style === 'bold' ? 'font-bold' : note.body.style === 'italic' ? 'italic' : note.body.style === 'Bold&Italic' ? 'font-bold italic' : ''} ml-2  break-all flex`}>{note.body.content.slice(0, 45)}{note.body.content.length > 45 ? '...... ' : ' '}</p>
+                <p className={`${note.body.style === 'bold' ? 'font-bold' : note.body.style === 'italic' ? 'italic' : note.body.style === 'Bold&Italic' ? 'font-bold italic' : ''} ml-2  break-all flex`}>{note.body.content?.slice(0, 45)}{note.body.content?.length > 45 ? '...... ' : ' '}</p>
               </li>
             </ul>
           ))

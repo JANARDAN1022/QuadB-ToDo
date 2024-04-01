@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# React To-Do Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple To-Do application built using ReactJS, TypeScript, Redux Toolkit, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1) Clone the repository:
+git clone https://github.com/JANARDAN1022/QuadB-ToDo.git
 
-## Expanding the ESLint configuration
+2) Navigate to the project directory:
+cd (folder Where Project is Cloned)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+3) Install dependencies: npm install
+4) run the server: npm run dev
 
-- Configure the top-level `parserOptions` property like this:
+## Features
+--> Add new tasks with descriptions
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+--> View list of added tasks
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+--> Delete tasks
+
+--> View/edit individual tasks
+
+## Implementation Details
+--> The application utilizes React functional components and hooks (useState, useEffect) for managing state.
+
+--> Redux Toolkit is used for state management, enabling actions and reducers for handling task-related logic.
+
+--> Tasks are stored in local storage for persistence across page reloads.
+
+--> Tailwind CSS is used for styling components.

@@ -13,7 +13,7 @@ const NoteApp = () => {
   const dispatch = useAppDispatch(); // Redux dispatch hook
   const Navigate = useNavigate(); // Navigation hook
   const notes = useAppSelector((state) => state.Notes.Notes); // Accessing notes state from Redux store
-  const [newNote, setNewNote] = useState<Note>({ id: '', title: '', body: { content: '', style: '' }, Completed: false }); 
+  const [newNote, setNewNote] = useState<Note>({ id: '', title: '', body: { content: '', style: '' }, Completed: false,Createdon:'',Updatedon:'' }); 
   const [TextType, setTextType] = useState<string>(''); 
   const [ConfirmDeletePopup, setConfirmDeletePopup] = useState<{ open: boolean, id: string }>({ id: '', open: false }); 
  
@@ -25,9 +25,14 @@ const NoteApp = () => {
   
   const handleAddNote = () => {
     if (newNote.title && newNote.body) {
-      dispatch(AddNote({ ...newNote, id: String(notes.length + 1) }));
-      // Resetting new note state
-      setNewNote({ id: '', title: '', body: { content: '', style: '' }, Completed: false });
+      if(notes.length===0){
+     dispatch(AddNote({ ...newNote, id: String(notes.length + 1),Createdon:new Date(Date.now()).toDateString() }));
+      }else{
+        const newID = notes[notes.length-1]?.id
+        dispatch(AddNote({ ...newNote, id: String(Number(newID) + 1),Createdon:new Date(Date.now()).toDateString()}));
+      }
+            // Resetting new note state
+            setNewNote({ id: '', title: '', body: { content: '', style: '' }, Completed: false,Createdon:'',Updatedon:'' });
     } else {
       // Focusing on the appropriate input field if data is missing
       if (!newNote.title) {
@@ -83,6 +88,18 @@ const NoteApp = () => {
             <label className='min-[842px]:flex hidden'>Title:</label>
             <input
               disabled={ConfirmDeletePopup.open}
+              onKeyDown={(e)=>{
+                if(e.key==='Enter' && newNote.title!==''){
+                  e.preventDefault();
+                  if(newNote.body.content!==''){
+                  handleAddNote()
+                  }else{
+                    if(BodyRef && BodyRef.current){
+                      BodyRef.current.focus();
+                    }
+                  }
+                }
+              }}
               maxLength={40}
               className='text-black rounded-md border border-gray-500 p-2 w-[200px]'
               type="text"
@@ -151,7 +168,7 @@ const NoteApp = () => {
             <ul key={note.id} className={`relative ${note.Completed ? 'border-green-500 text-green-500' : 'border-white'} border  flex p-3  w-full max-w-max min-w-full md:min-w-[350px]`}>
               <li className='w-full'>
                 <div className='p-2 w-full  flex justify-between gap-2 items-center'>
-                  <span className=''>{note.id}{')'}</span>
+                  <span className=''>{note.Createdon}</span>
                   <div className='flex items-center gap-2'>
                     {/* Button to view/edit note */}
                     <button onClick={() => handleGetNote(note.id)} className={` text-xs text-yellow-500 hover:text-yellow-400 transition-all 300ms ease-in`}>View/Edit Note</button>

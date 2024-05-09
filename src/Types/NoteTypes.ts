@@ -6,6 +6,8 @@ export interface Note {
         style:string
     },
     Completed:boolean
+    Createdon:string
+    Updatedon:string
 }
 export interface NoteState {
     Notes:Note[],

@@ -28,11 +28,11 @@ const DeleteNote = (state:NoteState,action:PayloadAction<string>)=>{
 }
 
 const UpdateNote = (state: NoteState, action: PayloadAction<Note>) => {
-    const { id, title, body,Completed } = action.payload;
+    const { id, title, body,Completed,Createdon } = action.payload;
     const existingNoteIndex = state.Notes.findIndex((note) => note.id === id);
   
     if (existingNoteIndex !== -1) {
-      state.Notes[existingNoteIndex] = { id, title, body,Completed };
+      state.Notes[existingNoteIndex] = { id, title, body,Completed,Createdon,Updatedon:new Date(Date.now()).toDateString()};
       saveNotesToLocalStorage(state.Notes);
     }
   };

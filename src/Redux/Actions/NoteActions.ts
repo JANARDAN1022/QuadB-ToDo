@@ -21,7 +21,6 @@ export const AddNote = createAsyncThunk('notes/add',async(Note:Note,{ dispatch }
 // UpdateNote async thunk
 export const UpdateNote = createAsyncThunk('notes/update',async (note: Note, { dispatch }: { dispatch: Dispatch }) => {
       try {
-        console.log(note,'Action');
         dispatch(updateNote(note));
         return { success: true }; // Return success status
       } catch (error: any) {

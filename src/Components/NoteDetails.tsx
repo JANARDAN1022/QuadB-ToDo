@@ -17,7 +17,9 @@ const NoteDetails = () => {
     id: id ? id : '', 
     body: note ? note.body : { content: '', style: '' }, 
     Completed: note ? note.Completed : false, 
-    title: note ? note.title : '' 
+    title: note ? note.title : '', 
+    Createdon:note? note.Createdon:'',
+    Updatedon:note? note.Updatedon?note.Updatedon:'':''
   });
   const [Updating, setUpdating] = useState(false); 
   const TitleRef = useRef<HTMLInputElement>(null); 
@@ -69,6 +71,8 @@ const NoteDetails = () => {
               },
               Completed: NewNote.Completed === true ? true : false,
               title: NewNote.title,
+              Createdon:NewNote.Createdon,
+              Updatedon:NewNote.Updatedon
             });
             setUpdating(false);
           }
@@ -84,12 +88,15 @@ const NoteDetails = () => {
       <h1 className='absolute top-20 font-bold text-xl'>Note Details</h1>
       {/* Displaying note details */}
       {note ? (
-        <div className='flex flex-col items-center w-[600px] justify-center self-center border relative border-yellow-400 shadow-md shadow-yellow-500 rounded-lg  p-10 gap-2'>
+        <div className='flex flex-col items-center  max-[400px]:text-xs max-[600px]:text-sm md:text-base max-w-[600px] w-full justify-center self-center border relative border-yellow-400 shadow-md shadow-yellow-500 rounded-lg  p-10 gap-2'>
           {/* Displaying note ID */}
-          <p className='absolute left-5 top-5'>ID: {note.id}</p>
+          <p className='absolute left-5 top-5'>{note.Createdon}</p>
+          {note.Updatedon &&
+          <p className='absolute left-5 top-12'>{note.Updatedon}</p>
+          }
           {/* Displaying note status */}
           {!Updating ?
-            <span className={`absolute cursor-pointer  right-14 top-5 ${note.Completed ? 'text-green-500 hover:text-green-500 border-green-500' : 'text-blue-400 hover:text-blue-500 border-blue-500'}  transition-all ease-in 300ms mr-3 flex items-center`}><span className='text-white mr-1'>Status:</span>{note.Completed ? 'Completed' : 'Pending'}</span>
+            <span className={`absolute cursor-pointer right-0 sm:right-5 md:right-14 top-5 ${note.Completed ? 'text-green-500 hover:text-green-500 border-green-500' : 'text-blue-400 hover:text-blue-500 border-blue-500'}  transition-all ease-in 300ms mr-3 flex items-center`}><span className='text-white mr-1 max-[400px]:hidden'>Status:</span>{note.Completed ? 'Completed' : 'Pending'}</span>
             :
             <span onClick={() => {
               if (note.Completed === updatedNote.Completed) {
@@ -97,16 +104,16 @@ const NoteDetails = () => {
               } else {
                 setUpdatedNote({ ...updatedNote, Completed: note.Completed })
               }
-            }} className={`absolute cursor-pointer right-14 top-5 ${!note.Completed ? 'text-green-500 hover:text-green-500 border-green-500' : 'text-blue-400 hover:text-blue-500 border-blue-500'} ${updatedNote.Completed !== note.Completed ? 'border px-2 ' : ''} transition-all ease-in 300ms mr-3 flex items-center`}><span className='text-white mr-1'>Mark</span>{note.Completed ? 'Pending' : 'Completed'} {updatedNote.Completed !== note.Completed ? '' : '?'}</span>
+            }} className={`absolute cursor-pointer right-0 sm:right-5 md:right-14 top-5 ${!note.Completed ? 'text-green-500 hover:text-green-500 border-green-500' : 'text-blue-400 hover:text-blue-500 border-blue-500'} ${updatedNote.Completed !== note.Completed ? 'border px-2 ' : ''} transition-all ease-in 300ms mr-3 flex items-center`}><span className='text-white mr-1'>Mark</span>{note.Completed ? 'Pending' : 'Completed'} {updatedNote.Completed !== note.Completed ? '' : '?'}</span>
           }
           {/* Edit and Close icons */}
-          <CiEdit onClick={HandleEdit} size={30} className={`${!Updating ? '' : 'hidden'} absolute cursor-pointer hover:text-blue-500 right-5 top-5 text-blue-400 transition-all ease-in 300ms`} />
+          <CiEdit onClick={HandleEdit}  className={`${!Updating ? '' : 'hidden'} text-[15px] sm:text-[20px] md:text-[30px] absolute cursor-pointer hover:text-blue-500 right-5 sm:right-2 md:right-5 top-10  sm:top-5 text-blue-400 transition-all ease-in 300ms`} />
           <RxCross1 onClick={() => {
             setUpdating(false)
             setUpdatedNote({ ...updatedNote, Completed: note.Completed })
           }} size={30} className={`${!Updating ? 'hidden' : ''} absolute cursor-pointer hover:text-red-500 right-5 top-5 text-red-400 transition-all ease-in 300ms`} />
           {/* Displaying and editing note title */}
-          <p className='flex gap-2 items-center mt-5'>Title: <span className={`${!Updating ? '' : 'hidden'}`}>{note.title}</span>
+          <p className='flex gap-2 items-center mt-12'>Title: <span className={`${!Updating ? '' : 'hidden'}`}>{note.title}</span>
             <input maxLength={40} className={`${!Updating ? 'hidden' : ''} border p-2 outline-none border-white bg-transparent text-white rounded-md`} type='text' ref={TitleRef} placeholder={`${note.title}`} value={updatedNote.title} onChange={(e: any) => setUpdatedNote({ ...updatedNote, title: e.target.value })} />
           </p>
           {/* Displaying and editing note body */}
